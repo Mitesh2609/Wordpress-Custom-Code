@@ -5,16 +5,16 @@
  * Sorting functionality on both field.
  */
 
- add_filter( 'manage_{post_type}_posts_columns', 'set_custom_column_jurisdiction' );
- function set_custom_column_jurisdiction($columns) {
+ add_filter( 'manage_{post_type}_posts_columns', 'set_custom_column_samarpan' );
+ function set_custom_column_samarpan($columns) {
      unset( $columns['date'] );
      $columns['published_date'] = "Date";
      $columns['last_updated_date'] = "Last Updated";
      return $columns;
  }
  
- add_action( 'manage_jurisdiction_posts_custom_column', 'custom_column_jurisdiction', 10, 2 );
- function custom_column_jurisdiction( $column, $post_id ) {
+ add_action( 'manage_{post_type}_posts_custom_column', 'custom_column_samarpan', 10, 2 );
+ function custom_column_samarpan( $column, $post_id ) {
      switch ( $column ) {
          case 'published_date':
              echo esc_html( 'Published' ); echo "<br>";
@@ -28,16 +28,16 @@
      }
  }
  
- add_filter( 'manage_edit-jurisdiction_sortable_columns', 'sortable_custom_jurisdiction_columns' );
- function sortable_custom_jurisdiction_columns( $columns ) {
+ add_filter( 'manage_edit-{post_type}_sortable_columns', 'sortable_custom_samarpan_columns' );
+ function sortable_custom_samarpan_columns( $columns ) {
      $columns['published_date'] = 'published_date';
      $columns['last_updated_date'] = 'last_updated_date';
      return $columns;
  }
  
- add_action( 'pre_get_posts', 'custom_sortable_column_query_jurisdiction' );
- function custom_sortable_column_query_jurisdiction( $query ) {
-     if ( is_admin() && $query->is_main_query() && $query->get( 'post_type' ) === 'jurisdiction' ) 
+ add_action( 'pre_get_posts', 'custom_sortable_column_query_samarpan' );
+ function custom_sortable_column_query_samarpan( $query ) {
+     if ( is_admin() && $query->is_main_query() && $query->get( 'post_type' ) === '{post_type}' ) 
      {
          $orderby = $query->get( 'orderby' );
  
